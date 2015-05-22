@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config />
+    <context:component-scan base-package="foo.bar"/>
+
+<!--    <bean id="UsersController" class="foo.bar.UsersController">
+        <constructor-arg ref="EmailValidator"/>
+        <constructor-arg ref="ActivationLinkGenerator"/>
+        <constructor-arg ref="EmailService"/>
+    </bean>-->
+
+    <bean id="EmailValidator" class="foo.bar.EmailValidator"></bean>
+
+    <bean id="ActivationLinkGenerator" class="foo.bar.ActivatonLinkGenerator"></bean>
+
+    <bean id="EmailTemplateGenerator" class="foo.bar.EmailTemplateGenerator"></bean>
+
+    <bean id="EmailService" class="foo.bar.EmailService">
+        <property name="_emailTemplateGenerator" ref="EmailTemplateGenerator"/>
+    </bean>
+    <bean id="UsersController" class="foo.bar.UsersController">
+        <property name="_emailValidator" ref="EmailValidator"/>
+        <property name="_activationLinkGenerator" ref="ActivationLinkGenerator"/>
+        <property name="_emailService" ref="EmailService"/>
+    </bean>
+
+
+
+</beans>
